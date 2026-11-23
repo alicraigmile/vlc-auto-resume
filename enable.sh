@@ -21,7 +21,7 @@ set_vlc_opt() {
 }
 
 set_vlc_opt "extraintf" "luaintf"
-set_vlc_opt "lua-intf" "auto_resume"
+set_vlc_opt "lua-intf" "vlc-auto-resume"
 set_vlc_opt "qt-continue" "0"
 
 chmod 444 "$VLCRC"

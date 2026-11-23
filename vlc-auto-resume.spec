@@ -4,7 +4,7 @@ Release:        1%{?dist}
 Summary:        VLC Lua interface extension to auto-resume local files and UPnP/DLNA streams
 
 License:        MIT
-URL:            https://github.com/alicraigmile/vlc_auto_resume
+URL:            https://github.com/alicraigmile/vlc-auto-resume
 Source0:        %{name}-%{version}.tar.gz
 
 BuildArch:      noarch
@@ -24,7 +24,7 @@ via Zenity on startup to resume, restart, or cancel.
 
 %install
 # 1. Install the Lua interface script system-wide
-install -D -m 0644 src/auto_resume.lua %{buildroot}%{_datadir}/vlc/lua/intf/auto_resume.lua
+install -D -m 0644 src/vlc-auto-resume.lua %{buildroot}%{_datadir}/vlc/lua/intf/vlc-auto-resume.lua
 
 # 2. Install the user-level enable script as a system command
 install -D -m 0755 scripts/enable.sh %{buildroot}%{_bindir}/vlc-auto-resume-enable
@@ -32,7 +32,7 @@ install -D -m 0755 scripts/enable.sh %{buildroot}%{_bindir}/vlc-auto-resume-enab
 %files
 %license LICENSE
 %doc README.md
-%{_datadir}/vlc/lua/intf/auto_resume.lua
+%{_datadir}/vlc/lua/intf/vlc-auto-resume.lua
 %{_bindir}/vlc-auto-resume-enable
 
 %post

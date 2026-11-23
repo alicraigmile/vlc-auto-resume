@@ -38,7 +38,7 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           rpmdev-setuptree
           git archive --format=tar.gz \
-            --prefix="vlc_auto_resume-${{ steps.meta.outputs.version }}/" \
+            --prefix="vlc-auto-resume-${{ steps.meta.outputs.version }}/" \
             -o ~/rpmbuild/SOURCES/vlc-auto-resume-${{ steps.meta.outputs.version }}.tar.gz \
             HEAD
 

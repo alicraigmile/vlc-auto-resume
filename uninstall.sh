@@ -2,7 +2,7 @@
 set -euo pipefail
 
 DEST_DIR="$HOME/.local/share/vlc/lua/intf"
-DEST_FILE="$DEST_DIR/auto_resume.lua"
+DEST_FILE="$DEST_DIR/vlc-auto-resume.lua"
 STATE_FILE="$HOME/.local/share/vlc/last_played.txt"
 VLCRC="$HOME/.config/vlc/vlcrc"
 
@@ -26,4 +26,4 @@ rm -f "$DEST_FILE" "$STATE_FILE"
 rmdir "$DEST_DIR" 2>/dev/null || true
 rmdir "$HOME/.local/share/vlc/lua" 2>/dev/null || true
 
-echo "Uninstalled auto_resume.lua and restored default VLC config."
+echo "Uninstalled vlc-auto-resume.lua and restored default VLC config."
