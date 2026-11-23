@@ -76,6 +76,8 @@ jobs:
 
       - name: Commit spec bump and push tag
         run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
