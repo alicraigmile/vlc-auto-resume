@@ -8,6 +8,8 @@ URL:            https://github.com/alicraigmile/vlc-auto-resume
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
+BuildRequires:  lua
+BuildRequires:  groff
 Requires:       vlc
 Requires:       zenity
 
@@ -33,7 +35,16 @@ install -D -m 0755 enable.sh %{buildroot}%{_bindir}/vlc-auto-resume-enable
 install -D -m 0644 enable.1 %{buildroot}%{_mandir}/man1/vlc-auto-resume-enable.1
 
 %check
+# 1. Verify bash script syntax
 bash -n %{buildroot}%{_bindir}/vlc-auto-resume-enable
+
+# 2. Verify Lua interface script exists, is non-empty, and syntax is correct
+test -s %{buildroot}%{_datadir}/vlc/lua/intf/vlc-auto-resume.lua
+luac -p %{buildroot}%{_datadir}/vlc/lua/intf/auto_resume.lua
+
+# 3. Verify man page exists and parses without groff errors
+test -s %{buildroot}%{_mandir}/man1/vlc-auto-resume-enable.1
+groff -man -Tutf8 -z %{buildroot}%{_mandir}/man1/vlc-auto-resume-enable.1
 
 %files
 %license LICENSE
