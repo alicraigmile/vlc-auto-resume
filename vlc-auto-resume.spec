@@ -43,5 +43,5 @@ echo "  vlc-auto-resume-enable"
 echo "========================================================================="
 
 %changelog
-* Mon Nov 23 2026 Ali Craigmile <ali@craigmile.com> - 1.0.0-1
+* Mon Nov 23 2026 Ali Craigmile <ali@craigmile.com> - 1.0.0
 - Initial RPM package release
