@@ -5,7 +5,7 @@ Summary:        VLC Lua interface extension to auto-resume local files and UPnP/
 
 License:        MIT
 URL:            https://github.com/alicraigmile/vlc-auto-resume
-Source0:        %{name}-%{version}.tar.gz
+Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 Requires:       vlc
