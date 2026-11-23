@@ -56,13 +56,13 @@ jobs:
         with:
           name: vlc-auto-resume-rpms
           path: |
-            /root/rpmbuild/RPMS/noarch/*.rpm
-            /root/rpmbuild/SRPMS/*.rpm
+            ~/rpmbuild/RPMS/noarch/*.rpm
+            ~/rpmbuild/SRPMS/*.rpm
 
       - name: Attach RPMs to GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            /root/rpmbuild/RPMS/noarch/*.rpm
-            /root/rpmbuild/SRPMS/*.rpm
+            ~/rpmbuild/RPMS/noarch/*.rpm
+            ~/rpmbuild/SRPMS/*.rpm
