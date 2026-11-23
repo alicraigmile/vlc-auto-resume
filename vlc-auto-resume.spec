@@ -40,7 +40,7 @@ bash -n %{buildroot}%{_bindir}/vlc-auto-resume-enable
 %doc README.md
 %{_datadir}/vlc/lua/intf/vlc-auto-resume.lua
 %{_bindir}/vlc-auto-resume-enable
-%{_mandir}/vlc-auto-resume-enable.1
+%{_mandir}/man1/vlc-auto-resume-enable.1
 
 %post
 echo "========================================================================="
