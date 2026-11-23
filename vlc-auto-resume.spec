@@ -24,10 +24,10 @@ via Zenity on startup to resume, restart, or cancel.
 
 %install
 # 1. Install the Lua interface script system-wide
-install -D -m 0644 src/vlc-auto-resume.lua %{buildroot}%{_datadir}/vlc/lua/intf/vlc-auto-resume.lua
+install -D -m 0644 vlc-auto-resume.lua %{buildroot}%{_datadir}/vlc/lua/intf/vlc-auto-resume.lua
 
 # 2. Install the user-level enable script as a system command
-install -D -m 0755 scripts/enable.sh %{buildroot}%{_bindir}/vlc-auto-resume-enable
+install -D -m 0755 enable.sh %{buildroot}%{_bindir}/vlc-auto-resume-enable
 
 %files
 %license LICENSE
