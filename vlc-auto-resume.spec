@@ -29,11 +29,18 @@ install -D -m 0644 vlc-auto-resume.lua %{buildroot}%{_datadir}/vlc/lua/intf/vlc-
 # 2. Install the user-level enable script as a system command
 install -D -m 0755 enable.sh %{buildroot}%{_bindir}/vlc-auto-resume-enable
 
+# 3. Install man page
+install -D -m 0644 enable.1 %{buildroot}%{_mandir}/man1/vlc-auto-resume-enable.1
+
+%check
+bash -n %{buildroot}%{_bindir}/vlc-auto-resume-enable
+
 %files
 %license LICENSE
 %doc README.md
 %{_datadir}/vlc/lua/intf/vlc-auto-resume.lua
 %{_bindir}/vlc-auto-resume-enable
+%{_mandir}/vlc-auto-resume-enable.1
 
 %post
 echo "========================================================================="

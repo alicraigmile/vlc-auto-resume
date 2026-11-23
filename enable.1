@@ -1,0 +1,54 @@
+.TH VLC-AUTO-RESUME-ENABLE 1 "November 2026" "vlc-auto-resume" "User Commands"
+.SH NAME
+vlc-auto-resume-enable \- configure VLC for the auto-resume Lua interface extension
+.SH SYNOPSIS
+.B vlc-auto-resume-enable
+.SH DESCRIPTION
+.B vlc-auto-resume-enable
+configures the current user's VLC Media Player configuration file
+.RI ( ~/.config/vlc/vlcrc )
+to activate the system-wide
+.B vlc-auto-resume
+Lua interface extension.
+.PP
+Specifically, the helper performs the following actions:
+.IP \(bu 2
+Unlocks
+.I ~/.config/vlc/vlcrc
+if it was previously set to read-only.
+.IP \(bu 2
+Enables the
+.B luaintf
+interface module and sets
+.B lua-intf=vlc-auto-resume
+so VLC tracks playback positions for local files and UPnP/DLNA streams.
+.IP \(bu 2
+Sets
+.B qt-continue=0
+to disable VLC's built-in Qt resume prompt, preventing duplicate dialogs on startup.
+.IP \(bu 2
+Locks
+.I ~/.config/vlc/vlcrc
+with read-only permissions
+.RI ( 0444 )
+so VLC does not overwrite the Lua interface settings on exit.
+.SH FILES
+.TP
+.I ~/.config/vlc/vlcrc
+Per-user VLC configuration file modified and locked by this utility.
+.TP
+.I /usr/share/vlc/lua/intf/vlc-auto-resume.lua
+System-wide VLC Lua interface script invoked when VLC starts.
+.SH NOTES
+Because VLC reads
+.I vlcrc
+at startup and rewrites it on exit, the configuration file is locked read-only after updating. To change VLC preferences later via the GUI, temporarily restore write permissions with
+.B chmod u+w ~/.config/vlc/vlcrc
+before launching VLC, then run
+.B vlc-auto-resume-enable
+again afterward.
+.SH AUTHOR
+Ali Craigmile <ali@craigmile.com>
+.SH SEE ALSO
+.BR vlc (1),
+.BR zenity (1)
