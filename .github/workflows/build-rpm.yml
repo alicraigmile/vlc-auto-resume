@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Install RPM build tools
-        run: dnf install -y rpm-build rpmdevtools rpmlint git
+        run: dnf install -y rpm-build rpmdevtools rpmlint git groff lua
 
       - name: Checkout repository
         uses: actions/checkout@v4
