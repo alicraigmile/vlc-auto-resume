@@ -1,0 +1,87 @@
+name: Bump Version and Tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version increment type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      custom_version:
+        description: 'Optional explicit version (overrides bump, e.g., 1.2.0)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  bump-and-tag:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:44
+
+    steps:
+      - name: Install RPM tools and git
+        run: dnf install -y rpmdevtools git
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_PAT }}
+
+      - name: Calculate next version
+        id: ver
+        run: |
+          CURRENT=$(rpmspec -q --qf "%{version}\n" vlc-auto-resume.spec | head -n1)
+          echo "Current version: ${CURRENT}"
+
+          if [[ -n "${{ inputs.custom_version }}" ]]; then
+            NEXT="${{ inputs.custom_version }}"
+          else
+            IFS='.' read -r MAJOR MINOR PATCH <<< "${CURRENT}"
+            case "${{ inputs.bump }}" in
+              major)
+                MAJOR=$((MAJOR + 1))
+                MINOR=0
+                PATCH=0
+                ;;
+              minor)
+                MINOR=$((MINOR + 1))
+                PATCH=0
+                ;;
+              patch)
+                PATCH=$((PATCH + 1))
+                ;;
+            esac
+            NEXT="${MAJOR}.${MINOR}.${PATCH}"
+          fi
+
+          echo "Next version: ${NEXT}"
+          echo "next=${NEXT}" >> "$GITHUB_OUTPUT"
+
+      - name: Bump .spec version and changelog
+        run: |
+          rpmdev-bumpspec \
+            --new="${{ steps.ver.outputs.next }}" \
+            --userstring="Ali Craigmile <ali@craigmile.com>" \
+            --comment="Release ${{ steps.ver.outputs.next }}" \
+            vlc-auto-resume.spec
+
+      - name: Commit spec bump and push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add vlc-auto-resume.spec
+          git commit -m "chore(release): bump version to ${{ steps.ver.outputs.next }}"
+          git tag -a "v${{ steps.ver.outputs.next }}" -m "Release v${{ steps.ver.outputs.next }}"
+
+          git push origin HEAD:main
+          git push origin "v${{ steps.ver.outputs.next }}"

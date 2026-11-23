@@ -1,0 +1,64 @@
+name: Build RPM
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-rpm:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:44
+
+    steps:
+      - name: Install RPM build tools
+        run: dnf install -y rpm-build rpmdevtools rpmlint git
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag or spec
+        id: meta
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/v}"
+            sed -i "s/^Version:.*/Version:        ${VERSION}/" vlc-auto-resume.spec
+          else
+            VERSION=$(rpmspec -q --qf "%{version}\n" vlc-auto-resume.spec | head -n1)
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up rpmbuild tree and source tarball
+        run: |
+          rpmdev-setuptree
+          git archive --format=tar.gz \
+            --prefix="vlc_auto_resume-${{ steps.meta.outputs.version }}/" \
+            -o ~/rpmbuild/SOURCES/vlc-auto-resume-${{ steps.meta.outputs.version }}.tar.gz \
+            HEAD
+
+      - name: Build RPM and SRPM
+        run: rpmbuild -ba vlc-auto-resume.spec
+
+      - name: Lint RPMs
+        run: rpmlint vlc-auto-resume.spec ~/rpmbuild/RPMS/noarch/*.rpm ~/rpmbuild/SRPMS/*.rpm
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: vlc-auto-resume-rpms
+          path: |
+            /root/rpmbuild/RPMS/noarch/*.rpm
+            /root/rpmbuild/SRPMS/*.rpm
+
+      - name: Attach RPMs to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            /root/rpmbuild/RPMS/noarch/*.rpm
+            /root/rpmbuild/SRPMS/*.rpm
