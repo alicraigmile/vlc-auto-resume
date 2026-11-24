@@ -35,13 +35,15 @@ A lightweight Lua interface script for VLC 3.x on Linux that tracks the last pla
 
 1. Enable the COPR repository, and install the RPM
 
-   ```sudo dnf copr enable alicraigmile/vlc-auto-resume
+   ```bash
+   sudo dnf copr enable alicraigmile/vlc-auto-resume
    sudo dnf install vlc-auto-resume
    ```
 
 2. Enable the interface in your ~/.config/clv/vlcrc (once per user)
 
-   ```vlc-auto-resume-enable
+   ```bash
+   vlc-auto-resume-enable
    ```
 
 ## Local Installation
@@ -73,7 +75,7 @@ Because `~/.config/vlc/vlcrc` is locked read-only (`444`), changes made in VLC's
 ```bash
 chmod 644 ~/.config/vlc/vlcrc
 # Launch VLC, adjust preferences, close VLC, then re-run:
-./scripts/enable.sh
+./enable.sh
 ```
 
 ## Uninstallation
@@ -81,7 +83,7 @@ chmod 644 ~/.config/vlc/vlcrc
 To stop VLC, restore default `vlcrc` settings (`qt-continue=1`, writable `644`), and remove the installed script and saved state:
 
 ```bash
-./scripts/uninstall.sh
+./uninstall.sh
 ```
 
 ## How It Works
