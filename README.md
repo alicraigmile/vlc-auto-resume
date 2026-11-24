@@ -33,22 +33,35 @@ A lightweight Lua interface script for VLC 3.x on Linux that tracks the last pla
 
 ## Installation
 
+1. Enable the COPR repository, and install the RPM
+
+   ```sudo dnf copr enable alicraigmile/vlc-auto-resume
+   sudo dnf install vlc-auto-resume
+   ```
+
+2. Enable the interface in your ~/.config/clv/vlcrc (once per user)
+
+   ```vlc-auto-resume-enable
+   ```
+
+## Local Installation
+
 1. Make the scripts executable:
 
    ```bash
-   chmod +x scripts/*.sh
+   chmod +x *.sh
    ```
 
 2. Install the Lua interface script:
 
    ```bash
-   ./scripts/install.sh
+   ./install.sh
    ```
 
 3. Enable the interface in VLC's configuration:
 
    ```bash
-   ./scripts/enable.sh
+   ./enable.sh
    ```
 
 > **Note:** `enable.sh` stops any running VLC processes, sets `extraintf=luaintf`, `lua-intf=vlc-auto-resume`, and `qt-continue=0` in `~/.config/vlc/vlcrc`, and sets `vlcrc` to read-only (`chmod 444`) so VLC's GUI does not strip `extraintf` on exit.
