@@ -1,5 +1,5 @@
 Name:           vlc-auto-resume
-Version:        0.0.1
+Version:        0.1.0
 Release:        1%{?dist}
 Summary:        VLC Lua interface extension to auto-resume local files and UPnP/DLNA streams
 
@@ -61,5 +61,8 @@ echo "  vlc-auto-resume-enable"
 echo "========================================================================="
 
 %changelog
+* Tue Nov 24 2026 Ali Craigmile <ali@craigmile.com> - 0.1.0-1
+- Release 0.1.0
+
 * Mon Nov 23 2026 Ali Craigmile <ali@craigmile.com> - 0.0.1-1
 - Initial RPM package release
