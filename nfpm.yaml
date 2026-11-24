@@ -22,7 +22,7 @@ contents:
     dst: /usr/bin/vlc-auto-resume-enable
     file_info:
       mode: 0755
-  - src: ./vlc-auto-resume-enable.1
+  - src: ./enable.1
     dst: /usr/share/man/man1/vlc-auto-resume-enable.1
     file_info:
       mode: 0644
