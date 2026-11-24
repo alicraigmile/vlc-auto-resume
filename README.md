@@ -33,6 +33,8 @@ A lightweight Lua interface script for VLC 3.x on Linux that tracks the last pla
 
 ## Installation
 
+### Fedora
+
 1. Enable the COPR repository, and install the RPM
 
    ```bash
@@ -46,7 +48,13 @@ A lightweight Lua interface script for VLC 3.x on Linux that tracks the last pla
    vlc-auto-resume-enable
    ```
 
-## Local Installation
+### Debian / Raspbian
+
+  ```curl -LO https://github.com/alicraigmile/vlc-auto-resume/releases/download/v0.2.9/vlc-auto-resume_0.2.9_all.deb
+  apt-get install ./vlc-auto-resume_0.2.9_all.deb
+  ```
+
+### Local Installation
 
 1. Make the scripts executable:
 
