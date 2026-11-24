@@ -14,8 +14,8 @@ depends:
   - zenity
 
 contents:
-  - src: ./auto_resume.lua
-    dst: /usr/share/vlc/lua/intf/auto_resume.lua
+  - src: ./vlc-auto-resume.lua
+    dst: /usr/share/vlc/lua/intf/vlc-auto-resume.lua
     file_info:
       mode: 0644
   - src: ./enable.sh
