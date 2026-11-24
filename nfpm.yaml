@@ -1,0 +1,32 @@
+name: "vlc-auto-resume"
+arch: "all"
+platform: "linux"
+version: "${VERSION}"
+section: "video"
+priority: "optional"
+maintainer: "Ali Craigmile <ali@craigmile.com>"
+description: "VLC Lua interface extension to auto-resume local files and UPnP/DLNA streams"
+homepage: "https://github.com/alicraigmile/vlc-auto-resume"
+license: "MIT"
+
+depends:
+  - vlc
+  - zenity
+
+contents:
+  - src: ./auto_resume.lua
+    dst: /usr/share/vlc/lua/intf/auto_resume.lua
+    file_info:
+      mode: 0644
+  - src: ./enable.sh
+    dst: /usr/bin/vlc-auto-resume-enable
+    file_info:
+      mode: 0755
+  - src: ./vlc-auto-resume-enable.1
+    dst: /usr/share/man/man1/vlc-auto-resume-enable.1
+    file_info:
+      mode: 0644
+  - src: ./LICENSE
+    dst: /usr/share/doc/vlc-auto-resume/copyright
+    file_info:
+      mode: 0644

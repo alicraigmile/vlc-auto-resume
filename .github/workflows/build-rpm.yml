@@ -1,4 +1,4 @@
-name: Build RPM
+name: Build RPM and DEB Packages
 
 on:
   push:
@@ -66,3 +66,32 @@ jobs:
           files: |
             ~/rpmbuild/RPMS/noarch/*.rpm
             ~/rpmbuild/SRPMS/*.rpm
+
+  build-deb:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Determine version
+        id: meta
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/v}"
+          else
+            VERSION=$(grep -E '^Version:' vlc-auto-resume.spec | awk '{print $2}')
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Build .deb with nFPM
+        uses: blinktag/nfpm@v2.27.1
+        env:
+          VERSION: ${{ steps.meta.outputs.version }}
+        with:
+          packager: deb
+
+      - name: Attach .deb to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: vlc-auto-resume_*.deb
