@@ -87,7 +87,7 @@ jobs:
         env:
           VERSION: ${{ steps.meta.outputs.version }}
         run:
-         echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' | sudo tee /etc/apt/sources.list.d/goreleaser.list
+          echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' | sudo tee /etc/apt/sources.list.d/goreleaser.list
           sudo apt-get update
           sudo apt-get install -y nfpm
           nfpm package --packager deb
